@@ -1,0 +1,34 @@
+%p#notice= notice
+
+.row
+  .col-10
+    name: 
+    =@uPro.name
+  .col-2
+    -if @uPro.id != @user.id
+      -if @isFollowing
+        = simple_form_for :user, url: "/profile/#{@name}", method: :delete do |f|
+
+          .form-actions
+            = f.button :submit, 'Unfollow', class:"btn btn-secondary mt-2"
+      -else
+        = simple_form_for :user, url: "/profile/#{@name}", method: :post do |f|
+
+          .form-actions
+            = f.button :submit, 'Follow', class:"btn btn-success mt-2"
+
+.row.mt-3
+  .col-6
+    Message
+  .col-4
+    Created at
+.row
+-@uPro.posts.order("created_at DESC").each do |post|
+  .row
+    .col-6
+      =post.msg
+    .col-4
+      =post.created_at
+
+
+= link_to 'Back', feed_path

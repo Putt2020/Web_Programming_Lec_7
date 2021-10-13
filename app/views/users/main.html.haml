@@ -1,0 +1,12 @@
+-# frozen_string_literal: true
+= simple_form_for :user, url: "/main", method: :post do |f|
+  
+  %p#notice= notice
+  .form-inputs
+    = f.input :email
+    = f.input :password
+
+  .form-actions
+    = f.button :submit, 'Login', class:"btn btn-primary mt-2"
+
+= link_to 'register', "/register"

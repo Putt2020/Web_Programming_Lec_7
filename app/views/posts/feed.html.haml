@@ -1,0 +1,21 @@
+%p#notice= notice
+
+.row
+  .col-5
+    Message
+  .col-2
+    User Name
+  .col-3
+    Time Create
+  .col-2
+    %a.btn.btn-primary.btn-lg{:href => "/new_post", :role => "button"} New Post
+- @pos.each do |post_id|
+  .row
+    .col-5
+      = Post.find(post_id).msg
+    .col-2
+      = User.find(Post.find(post_id).user_id).name
+    .col-3
+      = Post.find(post_id).created_at
+    .col-2
+
