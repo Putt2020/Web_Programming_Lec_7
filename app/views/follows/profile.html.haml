@@ -1,10 +1,10 @@
 %p#notice= notice
 
 .row
-  .col-10
+  .col-sm-10.col-md-8.text-primary.h3
     name: 
     =@uPro.name
-  .col-2
+  .col-sm-2.col-md-4
     -if @uPro.id != @user.id
       -if @isFollowing
         = simple_form_for :user, url: "/profile/#{@name}", method: :delete do |f|
@@ -18,17 +18,17 @@
             = f.button :submit, 'Follow', class:"btn btn-success mt-2"
 
 .row.mt-3
-  .col-6
+  .col-sm-6.col-md-5
     Message
-  .col-4
+  .col-sm-4.col-md-4
     Created at
 .row
 -@uPro.posts.order("created_at DESC").each do |post|
   .row
-    .col-6
+    .col-sm-6.col-md-5
       =post.msg
-    .col-4
+    .col-sm-4.col-md-4
       =post.created_at
 
 
-= link_to 'Back', feed_path
+= link_to 'Back', feed_path, class:"btn btn-info mt-2"

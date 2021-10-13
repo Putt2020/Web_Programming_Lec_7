@@ -1,12 +1,18 @@
 -# frozen_string_literal: true
 = simple_form_for :user, url: "/main", method: :post do |f|
   
-  %p#notice= notice
+  %p#notice.text-info= notice
   .form-inputs
-    = f.input :email
-    = f.input :password
+    .row
+      .col-sm-12.col-md-8.col-lg-6.col-xl-5
+        = f.input :email
+    .row.mt-2
+      .col-sm-12.col-md-8.col-lg-6.col-xl-5
+        = f.input :password
 
-  .form-actions
-    = f.button :submit, 'Login', class:"btn btn-primary mt-2"
-
-= link_to 'register', "/register"
+  .row
+    .col-2
+      .form-actions.mt-2
+        = f.button :submit, 'Login', class:"btn btn-primary mt-2"
+    .col-2.mt-2
+      = link_to 'register', "/register", class:"btn btn-primary mt-2"

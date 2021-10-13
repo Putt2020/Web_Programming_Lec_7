@@ -1,21 +1,21 @@
-%p#notice= notice
+%p#notice.text-success= notice
 
 .row
-  .col-5
+  .col-md-5.col-sm-6
     Message
-  .col-2
+  .col-md-2.col-sm-1
     User Name
-  .col-3
+  .col-md-3.col-sm-3
     Time Create
-  .col-2
+  .col-md-2.col-sm-2
     %a.btn.btn-primary.btn-lg{:href => "/new_post", :role => "button"} New Post
 - @pos.each do |post_id|
   .row
-    .col-5
+    .col-md-5.col-sm-6
       = Post.find(post_id).msg
-    .col-2
+    .col-md-2.col-sm-1
       = User.find(Post.find(post_id).user_id).name
-    .col-3
+    .col-md-3.col-sm-3
       = Post.find(post_id).created_at
-    .col-2
+    .col-md-2.col-sm-2
 

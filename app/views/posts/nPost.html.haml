@@ -3,9 +3,13 @@
 = simple_form_for :post, url: "/new_post", method: :post  do |f|
 
   .form-inputs
-    = f.input :msg
+    .row
+      .col-sm-12.col-md-8.col-lg-6.col-xl-5.mt-2
+        = f.input :msg
 
-  .form-actions
-    = f.button :submit, 'Create Post',class:"btn btn-primary mt-2"
-
-= link_to 'Back', feed_path
+  .row
+    .col-md-3.col-xl-2
+      .form-actions.mt-3
+        = f.button :submit, 'Create Post', class:"btn btn-primary mt-2"
+    .col.mt-3
+      = link_to 'Back', feed_path, class:"btn btn-primary mt-2"
