@@ -12,16 +12,23 @@ class User < ApplicationRecord
 	has_many :followee_relationship, foreign_key: :follower_id, class_name: 'Follow'
 	has_many :followees, through: :followee_relationship, source: :followee
 
+	has_many :likes
+
+	# remember validate is call when trying to save or call valid?
 	validates :email, uniqueness: true, presence: true
 	validates :name, uniqueness: true, presence: true
+#	validate :match_password
+
 	has_secure_password
 
-#	def valid_user_id(checkID)
-#		if checkID == self.user_id
-#			return true
-#		else
-#			errors.add(:user_id, "is not match")
-#			return false
-#		end
-#	end
+=begin  password_confirmation is nil. So, rip
+	
+end
+	def match_password
+		errors.add(:password, "mis match with password_confirm #{password}") if password != password_confirmation
+  		errors.add(:password_confirm, "mis match with password #{password_confirmation}") if password != password_confirmation
+  	end
+
+=end
+
 end

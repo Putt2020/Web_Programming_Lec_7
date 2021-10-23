@@ -1,21 +1,65 @@
 %p#notice.text-success= notice
 
 .row
-  .col-md-5.col-sm-6
-    Message
-  .col-md-2.col-sm-1
-    User Name
-  .col-md-3.col-sm-3
-    Time Create
-  .col-md-2.col-sm-2
+  .col-md-9.col-sm-8.col-lg-10.fs-2.text-primary.px-4
+    FEED
+  .col-md-3.col-sm-4.col-lg-2
     %a.btn.btn-primary.btn-lg{:href => "/new_post", :role => "button"} New Post
-- @pos.each do |post_id|
+- get_feed_post.each do |post|
   .row
-    .col-md-5.col-sm-6
-      = Post.find(post_id).msg
-    .col-md-2.col-sm-1
-      = User.find(Post.find(post_id).user_id).name
-    .col-md-3.col-sm-3
-      = Post.find(post_id).created_at
-    .col-md-2.col-sm-2
+    .col-sm-12.col-md-10.col-lg-9.col-xl-8
+      .border.rounded-1000.border-dark.mt-4.bg-secondary.bg-opacity-25.justify-content-center
+        .row
+          .col-md-5.col-sm-6.col-lg-4.col-xl-3.px-4
+            by :
+            = post.user.name
+          .col.px-4
+            at :
+            = post.created_at
+        .row
+          .col.px-4
+            message :
+            = post.msg
+        .row.mb-3.mt-1
+          .col-md-3.col-sm-3.col-lg-2.col-xl-2.px-4.px-4
+            -if !alreadyLiked(post.id, @user.id)
+              = simple_form_for :like, url: "/createFeedLike/#{post.id}", method: :post do |f|
+                .form-actions
+                  = f.button :submit, 'Like', class:"btn btn-outline-primary"
+            -else
+              = simple_form_for :like, url: "/deleteFeedLike/#{getLikeID(post.id, @user.id)}", method: :delete do |f|
+                .form-actions
+                  = f.button :submit, 'Unlike', class:"btn btn-outline-dark"
+          .col.px-4
+            -get_post_likedUser(post.id)
+            .dropdown
+              %button#dropdownMenuButton1.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :type => "button"} #{@likeUid.count} Users like this post
+              %ul.dropdown-menu{"aria-labelledby" => "dropdownMenuButton1"}
+                -if !@noLike
+                  -@likedUser.each do |user|
+                    %li
+                      %a.dropdown-item{:href => "/profile/#{user.name}"} #{user.name}
+
+.mb-5
+      
+
+-# .table.table-dark.table-striped.table-hover
+-#   .row
+-#     .col-md-5.col-sm-6
+-#       Message
+-#     .col-md-2.col-sm-1
+-#       User Name
+-#     .col-md-3.col-sm-3
+-#       Time Create
+-#     .col-md-2.col-sm-2
+-#       %a.btn.btn-primary.btn-lg{:href => "/new_post", :role => "button"} New Post
+-#   - get_feed_post.each do |post|
+-#     .row
+-#       .col-md-5.col-sm-6
+-#         = post.msg
+-#       .col-md-2.col-sm-1
+-#         = post.user.name
+-#       .col-md-3.col-sm-3
+-#         = post.created_at
+-#       .col-md-2.col-sm-2
 

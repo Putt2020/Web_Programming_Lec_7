@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :likes
   resources :follows
   get 'main', to: 'users#main'
   post 'main', to: 'users#pmain'
@@ -10,6 +11,10 @@ Rails.application.routes.draw do
   delete 'profile/:name', to: 'follows#Dprofile'
   get '/new_post', to: 'posts#nPost'
   post '/new_post', to: 'posts#cPost'
+  post '/createFeedLike/:postID', to: 'likes#createFeedLike'
+  delete '/deleteFeedLike/:likeID', to: 'likes#deleteFeedLike'
+  post '/createProfLike/:postID/:profName', to: 'likes#createProfLike'
+  delete '/deleteProfLike/:likeID/:profName', to: 'likes#deleteProfLike'
 
   resources :posts
   resources :users

@@ -17,18 +17,39 @@
           .form-actions
             = f.button :submit, 'Follow', class:"btn btn-success mt-2"
 
-.row.mt-3
-  .col-sm-6.col-md-5
-    Message
-  .col-sm-4.col-md-4
-    Created at
-.row
 -@uPro.posts.order("created_at DESC").each do |post|
   .row
-    .col-sm-6.col-md-5
-      =post.msg
-    .col-sm-4.col-md-4
-      =post.created_at
+    .col-sm-12.col-md-10.col-lg-9.col-xl-8
+      .border.rounded-1000.border-dark.mt-4.bg-secondary.bg-opacity-25.justify-content-center
+        .row
+          .col-md-5.col-sm-6.col-lg-4.col-xl-3.px-4
+            by :
+            = post.user.name
+          .col.px-4
+            at :
+            = post.created_at
+        .row
+          .col.px-4
+            message :
+            = post.msg
+        .row.mb-3.mt-1
+          .col-md-3.col-sm-3.col-lg-2.col-xl-2.px-4.px-4
+            -if !alreadyLiked(post.id, @user.id)
+              = simple_form_for :like, url: "/createProfLike/#{post.id}/#{@uPro.name}", method: :post do |f|
+                .form-actions
+                  = f.button :submit, 'Like', class:"btn btn-outline-primary"
+            -else
+              = simple_form_for :like, url: "/deleteProfLike/#{getLikeID(post.id, @user.id)}/#{@uPro.name}", method: :delete do |f|
+                .form-actions
+                  = f.button :submit, 'Unlike', class:"btn btn-outline-dark"
+          .col.px-4
+            -get_post_likedUser(post.id)
+            .dropdown
+              %button#dropdownMenuButton1.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :type => "button"} #{@likeUid.count} Users like this post
+              %ul.dropdown-menu{"aria-labelledby" => "dropdownMenuButton1"}
+                -if !@noLike
+                  -@likedUser.each do |user|
+                    %li
+                      %a.dropdown-item{:href => "/profile/#{user.name}"} #{user.name}
 
-
-= link_to 'Back', feed_path, class:"btn btn-info mt-2"
+= link_to 'Back', feed_path, class:"btn btn-info mt-4 mb-3"

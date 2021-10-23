@@ -59,12 +59,12 @@ class UsersController < ApplicationController
     end
   end
 
-  #get
+  #get /main
   def main
     session[:user_id] = nil
   end
 
-  #post
+  #post /main
   def pmain
     
     #logging = params[:commit]
@@ -81,23 +81,27 @@ class UsersController < ApplicationController
     end
   end
 
-  #get
+  #get /register
   def register
     @user = User.new
   end
 
-  #post create user
+  #post /register , for create user
   def regis
     @user = User.new({email: params[:user][:email], name: params[:user][:name], password: params[:user][:password]})
-    respond_to do |format|
-      if @user.save
-        session[:user_id] = @user.id
-        format.html { redirect_to feed_path, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    if params[:user][:password] == params[:user][:password_confirm]
+      respond_to do |format|
+        if @user.save
+          session[:user_id] = @user.id
+          format.html { redirect_to feed_path, notice: "User was successfully created." }
+          format.json { render :show, status: :created, location: @user }
+        else
+          format.html { render :register, status: :unprocessable_entity }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to register_path, notice: "password missmatch"
     end
   end
 
@@ -117,6 +121,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :name, :password)
+      params.require(:user).permit(:email, :name, :password, :password_confirm)
     end
 end

@@ -1,7 +1,10 @@
 require "application_system_test_case"
 
+=begin
 class FollowsTest < ApplicationSystemTestCase
   setup do
+    @user = users(:one)
+    session[:user_id] = @user.id
     @follow = follows(:one)
   end
 
@@ -43,3 +46,4 @@ class FollowsTest < ApplicationSystemTestCase
     assert_text "Follow was successfully destroyed"
   end
 end
+=end
