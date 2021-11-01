@@ -30,7 +30,7 @@
               = simple_form_for :like, url: "/deleteFeedLike/#{getLikeID(post.id, @user.id)}", method: :delete do |f|
                 .form-actions
                   = f.button :submit, 'Unlike', class:"btn btn-outline-dark"
-          .col.px-4
+          .col-md-5.col-sm-5.col-lg-4.col-xl-4.px-4.px-4
             -get_post_likedUser(post.id)
             .dropdown
               %button#dropdownMenuButton1.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :type => "button"} #{@likeUid.count} Users like this post
@@ -39,8 +39,66 @@
                   -@likedUser.each do |user|
                     %li
                       %a.dropdown-item{:href => "/profile/#{user.name}"} #{user.name}
+          .col-md-3.col-sm-3.col-lg-2.col-xl-2.px-4
+            %button.modalButt.btn.btn-primary{class: "","data-bs-target" => "#unNameThis", "data-bs-toggle" => "modal", :type => "button", "#likes": post.likes.length, "users": @arrLikedUser } seeUserModal
 
+#UserLikee.modal.fade{role: "dialog"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title User who like this post
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+      .modal-body
+        %table{class: "table"}
+          %thread
+            %tr
+              %th= "User lists"
+          %tbody#uTable
+            %tr#uRow
+              %td#uName
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
 .mb-5
+
+:javascript
+  $(".modalButt").click(function(){
+    console.log($(this).attr("#likes"));
+    console.log($(this).attr("users"));
+
+    var u = $(this).attr("users");
+    console.log(u);
+    var arr = u.split("\", \"");
+    console.log(arr);
+    if (arr.length == 1 && arr[0] == "[]") {
+      arr = []
+    }
+    if (arr.length == 1 && arr[0] != "[]") {
+      var temp = arr[0].split("[\"");
+      arr[0] = temp[1];
+      temp = arr[0].split("\"]");
+      arr[0] = temp[0];
+    }
+    if (arr.length > 1) {
+      var temp = arr[0].split("[\"");
+      arr[0] = temp[1];
+      temp = arr[arr.length - 1].split("\"]");
+      arr[arr.length - 1] = temp[0];
+    }
+    console.log(arr);
+
+    tb = $("#uTable");
+    console.log(tb);
+    tb.empty();
+    for (let i=0; i<arr.length; i++) {
+      if (u.length==0) { break; }
+      console.log("i = " + i);
+      console.log(arr[i]);
+      tb.append("<tr><td><a class=\"btn btn-outline-info\" href=\"/profile/" + arr[i] + "\">" + arr[i] + "</a></td></tr>");
+    }
+
+    var myModal = new bootstrap.Modal(document.getElementById('UserLikee'), {});
+    myModal.show();
+  })
       
 
 -# .table.table-dark.table-striped.table-hover

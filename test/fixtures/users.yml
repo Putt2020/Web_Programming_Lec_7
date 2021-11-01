@@ -11,3 +11,9 @@ two:
   email: puttmail
   name: putt
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+
+three:
+  id: 3
+  email: yameroMail
+  name: yamroll
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
