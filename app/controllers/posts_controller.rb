@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-  require 'set'
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :logged_in
+
+  #helper :
 
   # GET /posts or /posts.json
   def index
@@ -59,21 +60,7 @@ class PostsController < ApplicationController
   end
 
   def feed
-    @follow = Set.new([@user.id])         #set of all followee include user himself
-    @pos = []
-    Follow.find_each do |fol|             #find all follower and put them in set
-      if (fol.follower_id == @user.id)
-        @follow.add(fol.followee_id)
-      end
-    end
-    Post.order("created_at DESC").each do |post|   #get all post sort by time(newest first)
-      if (@follow.member?(post.user_id))
-        @pos.push(post.id)
-      end
-    end
-
-    puts @follow
-    puts @pos
+    
   end
 
   def nPost

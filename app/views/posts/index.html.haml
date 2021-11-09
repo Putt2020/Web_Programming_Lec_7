@@ -1,13 +1,13 @@
 %h1 Listing posts
 
-%table
+%table#postTable.display{:style => "width:100%"}
   %thead
     %tr
       %th Msg
       %th User
-      %th
-      %th
-      %th
+      %th Show
+      %th Edit
+      %th Delete
 
   %tbody
     - @posts.each do |post|
@@ -21,3 +21,12 @@
 %br
 
 = link_to 'New Post', new_post_path
+
+:javascript
+  $(document).ready(function() {
+    $('#postTable').DataTable( {
+        "scrollY":        "50vh",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+  });

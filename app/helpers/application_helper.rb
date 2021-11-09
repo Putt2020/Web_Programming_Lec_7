@@ -1,5 +1,5 @@
 module ApplicationHelper
-	def get_post_likedUser(postID)  #get all user who like this post, use in feed.html.haml
+	def get_post_likedUser(postID)  #get all user who like this post, use in feed.html.haml & profile.html.haml
 		@likeUid = Like.where(post_id: postID).pluck("user_id") 
 		#puts "likeUid length is #{likeUid.count}"
 		@likedUser = User.where(id: @likeUid)

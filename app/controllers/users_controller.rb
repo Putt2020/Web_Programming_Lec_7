@@ -64,6 +64,11 @@ class UsersController < ApplicationController
     session[:user_id] = nil
   end
 
+  def logout
+    session[:user_id] = nil
+    redirect_to main_path
+  end
+
   #post /main
   def pmain
     

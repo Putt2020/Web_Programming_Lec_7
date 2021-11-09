@@ -1,19 +1,23 @@
 %h1 Listing likes
 
-%table
+%table#likeTable.display{:style => "width:100%"}
   %thead
     %tr
       %th User
+      %th User name
       %th Post
-      %th
-      %th
-      %th
+      %th Post msg
+      %th Show
+      %th Edit
+      %th Delete
 
   %tbody
     - @likes.each do |like|
       %tr
         %td= like.user
+        %td= like.user.name
         %td= like.post
+        %td= like.post.msg
         %td= link_to 'Show', like
         %td= link_to 'Edit', edit_like_path(like)
         %td= link_to 'Destroy', like, method: :delete, data: { confirm: 'Are you sure?' }
@@ -21,3 +25,12 @@
 %br
 
 = link_to 'New Like', new_like_path
+
+:javascript
+  $(document).ready(function() {
+    $('#likeTable').DataTable( {
+        "scrollY":        "50vh",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+  });

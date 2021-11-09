@@ -1,13 +1,13 @@
 %h1 Listing follows
 
-%table
+%table#followTable.display{:style => "width:100%"}
   %thead
     %tr
-      %th Follower
-      %th Followee
-      %th
-      %th
-      %th
+      %th Follower id
+      %th Followee id
+      %th Show
+      %th Edit
+      %th Delete
 
   %tbody
     - @follows.each do |follow|
@@ -21,3 +21,12 @@
 %br
 
 = link_to 'New Follow', new_follow_path
+
+:javascript
+  $(document).ready(function() {
+    $('#followTable').DataTable( {
+        "scrollY":        "50vh",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+  });

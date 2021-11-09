@@ -5,4 +5,5 @@ module PostsHelper
 		@allpost = Post.where(user_id: weeIds).order("created_at DESC")
 		return @allpost
     end
+
 end

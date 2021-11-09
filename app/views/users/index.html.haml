@@ -1,21 +1,19 @@
 %h1 Listing users
 
-%table
+%table#userTable.display{:style => "width:100%"}
   %thead
     %tr
       %th Email
       %th Name
-      %th Password
-      %th
-      %th
-      %th
+      %th Show
+      %th Edit
+      %th Delete
 
   %tbody
     - @users.each do |user|
       %tr
         %td= user.email
         %td= user.name
-        %td= user.password
         %td= link_to 'Show', user
         %td= link_to 'Edit', edit_user_path(user)
         %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
@@ -23,5 +21,21 @@
 %br
 
 = link_to 'New User', new_user_path
+
+:javascript
+  console.log($('#userTable'));
+  $(document).ready(function() {
+    $('#userTable').DataTable( {
+        "scrollY":        "50vh",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+  });
+
+
+
+
+
+
 /<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/users/10">Destroy</a>
 /<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/users/36">Destroy</a>
